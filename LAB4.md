@@ -1,38 +1,51 @@
 import tkinter as tk
 from tkinter import messagebox
-def sort_words():
-    input_text = entry.get()
-    if not input_text:
-        messagebox.showerror("Error", "Please enter a hyphen-separated sequence of words.")
-        return
-    words = input_text.split("-")
-    words.sort()
-    sorted_text = "-".join(words)
-    result_label.config(
-        text=f"Sorted Sequence:\n\n{sorted_text}",
-        bg="#d1f7d1",  # Light green background for the result label
-        fg="#005500",  # Dark green text
-        font=("Courier", 14, "bold"),  # Monospace bold font for better readability
-    )
 
+
+def show_table():
+    try:
+        num = int(entry.get())
+        table_text = ""
+        for i in range(1, 11):
+            table_text += f"{num} x {i} = {num * i}\n"
+        result_label.config(text=table_text, bg="#e6f7ff")  # Adding a light background color for results
+    except ValueError:
+        messagebox.showerror("Invalid Input", "Please enter a valid number.")
+
+# Create the main application window
 root = tk.Tk()
-root.title("Hyphen-Separated Word Sorter")
-root.geometry("450x350")
-root.configure(bg="#f2f2f2")
-entry_label = tk.Label(root, text="Enter hyphen-separated words:", font=("Arial", 12), bg="#f2f2f2")
+root.title("Multiplication Table")
+root.geometry("400x200")
+root.configure(bg="#f2f2f2")  # Light gray background for the app
+
+# Input field for the number
+entry_label = tk.Label(root, text="Enter a number:", font=("Arial", 14), bg="#FFFF00")
 entry_label.pack(pady=10)
-entry = tk.Entry(root, font=("Arial", 14), width=35)
-entry.pack(pady=5)
-sort_button = tk.Button(
-    root, text="Sort Words", font=("Arial", 12), bg="#4CAF50", fg="white", command=sort_words
+
+entry = tk.Entry(root, font=("Arial", 14), justify="center", bd=2, relief="solid")
+entry.pack(pady=5, ipadx=10, ipady=5)
+
+# Button to generate the table
+generate_button = tk.Button(
+    root, text="Generate Table", font=("Arial", 14), bg="#4CAF50", fg="white", command=show_table
 )
-sort_button.pack(pady=15)
+generate_button.pack(pady=15)
+
+# Frame for results
+result_frame = tk.Frame(root, bg="#FFFF00", bd=4, relief="solid")
+result_frame.pack(pady=10, padx=10, fill="both", expand=True)
+
+# Label to display the multiplication table
 result_label = tk.Label(
-    root, text="", font=("Arial", 12), bg="#e6f7ff", fg="#333333", wraplength=400, justify="center", relief="groove"
+    result_frame, 
+    text="", 
+    font=("Courier", 24), 
+    justify="center",  # Center align the text
+    anchor="center",   # Anchor the content to the center
+    bg="#FFC0CB", 
+    fg="#333333",      # Dark text for readability
 )
 result_label.pack(pady=10, padx=10, fill="both", expand=True)
-footer_label = tk.Label(
-    root, text="Developed with using Tkinter", font=("Arial", 10, "italic"), bg="#f2f2f2", fg="#666666"
-)
-footer_label.pack(pady=5)
+
+# Run the main event loop
 root.mainloop()
